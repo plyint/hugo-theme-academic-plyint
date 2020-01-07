@@ -39,16 +39,22 @@
 {{ $image_container := "" }}
 {{ if eq $placement 2}}
   {{ $image_container = "container" }}
-  {{ if gt $featured.Width 1200 }}
-    {{ $image = $featured.Resize "1200x" }}
+  {{ if eq (printf "%T" $featured) "image" }}
+    {{ if gt $featured.Width 1200 }}
+      {{ $image = $featured.Resize "1200x" }}
+    {{ end }}
   {{ end }}
 {{else if eq $placement 3}}
   {{ $image_container = "container-fluid" }}
-  {{ $image := $featured.Fit "2560x2560" }}
+  {{ if eq (printf "%T" $featured) "image" }}
+    {{ $image := $featured.Fit "2560x2560" }}
+  {{ end }}
 {{else}}
   {{ $image_container = "article-container" }}
-  {{ if gt $featured.Width 720 }}
-    {{ $image = $featured.Resize "720x" }}
+  {{ if eq (printf "%T" $featured) "image" }}
+    {{ if gt $featured.Width 720 }}
+      {{ $image = $featured.Resize "720x" }}
+    {{ end }}
   {{ end }}
 {{end}}
 
@@ -64,10 +70,22 @@
 </div>
 
 {{/* Featured image */}}
+{{ if eq (printf "%T" $featured) "image" }}
 <div class="article-header {{$image_container}} featured-image-wrapper mt-4 mb-4" style="max-width: {{$image.Width}}px; max-height: {{$image.Height}}px;">
   <div style="position: relative">
     <img src="{{ $image.RelPermalink }}" alt="" class="featured-image">
+    {{ if $page.Params.coming_soon }}
+    <div class="coming-soon">Coming Soon!</div>
+    {{ end }}
+{{ else }}
+<div class="article-header {{$image_container}} featured-image-wrapper mt-4 mb-4">
+  <div style="position: relative">
+    <img src="{{ $image.RelPermalink }}" alt="" class="featured-image" style="max-width: 50%">
+{{ end }}
     {{ with $.Params.image.caption }}<span class="article-header-caption">{{ . | markdownify | emojify }}</span>{{ end }}
+    {{ if $page.Params.coming_soon }}
+    <div class="coming-soon">Coming Soon!</div>
+    {{ end }}
   </div>
 </div>
 {{else}}

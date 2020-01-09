@@ -125,7 +125,7 @@
  **************************************************/
 
 .wg-hero {
-  padding: 7em;
+  padding: 2em;
   clear: both;
   background-size: cover;
   background-repeat: no-repeat;
@@ -136,7 +136,7 @@
 }
 
 .hero-title {
-  margin-top: 2em;
+  margin-top: 1em;
   font-size: 2.7rem;
   line-height: 1;
 }
@@ -199,7 +199,8 @@ a.hero-cta-alt:hover {
 
 .hero-media {
   display: flex;
-  margin-top: 4em;
+  margin-top: 2em;
+  margin-bottom: 2em;
   align-items: center;
   justify-content: center;
   height: 100%;

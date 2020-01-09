@@ -18,7 +18,11 @@
   {{ end }}
   {{ $scr.Set "superuser_username" $superuser_username }}{{/* Set superuser globally for page_author.html. */}}
 
-  {{ with $superuser_name }}<meta name="author" content="{{ . }}">{{ end }}
+  {{ $author := $superuser_name }}
+  {{ if site.Params.author }}
+    {{ $author = site.Params.author }}
+  {{ end }}
+  <meta name="author" content="{{ $author }}">
 
   {{/* Generate page description. */}}
   {{ $desc := "" }}

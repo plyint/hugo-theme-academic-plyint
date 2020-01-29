@@ -50,30 +50,19 @@
       </div>
 
     </div>
-    <div class="col-12 col-md-6 order-first {{$order}}" >
+    <div class="col-12 col-md-6 order-first {{$order}}">
       {{ $resource := ($item.Resources.ByType "image").GetMatch "*featured*" }}
-      {{ with $resource }}
-      {{ $image := $resource }}
-      {{ if eq (printf "%T" $resource) "image" }}
-        {{ $image := $resource.Resize "540x" }}
-        {{ if $image }}
-          {{if $do_link}}<a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{end}}
-            <img src="{{ $image.RelPermalink }}" alt="">
-          {{if $do_link}}</a>{{end}}
-        {{end}}
-      {{ else }}
-        <!-- SVG images are not considered image resources in hugo -->
-        {{ $image := $item.Resources.GetMatch "*featured.svg" }}
-        {{ if $image }}
-          {{if $do_link}}<a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{end}}
-            <img src="{{ $image.RelPermalink }}" alt="" width="50%" style="margin: auto"> 
-          {{if $do_link}}</a>{{end}}
-        {{end}}
+      {{ if $resource }}
+        {{ $image := $resource.Resize "300x" }}
+        <div class="mx-auto" style="position: relative; max-width: {{$image.Width}}px">
+        {{if $do_link}}<a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{end}}
+          <img src="{{ $image.RelPermalink }}" alt="">
+        {{if $do_link}}</a>{{end}}
+        {{ if $item.Params.coming_soon }}
+          <div class="coming-soon">Coming Soon!</div>
+        {{ end }}
+        </div>
       {{ end }}
-      {{ if $item.Params.coming_soon }}
-            <div class="coming-soon">Coming Soon!</div>
-      {{ end }}
-      {{end}}
     </div>
   </div>
 </div>
